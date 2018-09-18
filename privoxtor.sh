@@ -1,4 +1,15 @@
 #!/bin/bash
+
+trap cleanup 1 2 3 6
+
+cleanup()
+{
+  echo "Caught Signal ... cleaning up."
+  rm -rf data privoxy
+  killall -v tor privoxy
+  echo "Done cleanup ... quitting."
+  exit 1
+}
 set -e
 
 base_socks_port=9050
